@@ -70,11 +70,11 @@ let float_four = 4.
    value of the last statement in that function.
 
    Try implementing [int_average].  *)
-let int_average x y = failwith "For you to implement"
+let int_average x y = (x + y) / 2 
 
 (* Now try implementing [float_average]. Remember that you can check the mli for
    the type of this function. *)
-let float_average x y = failwith "For you to implement"
+let float_average x y = (x +. y) /. 2. 
 
 (* Note that in OCaml, parenthese are not necessary when applying a function! So
    the following expression computes the average of 10 and 20:
@@ -180,4 +180,4 @@ let%test "Testing float_average..." =
   Float.(=) (float_average 5. 5.) 5.
 
 let%test "Testing float_average..." =
-  Float.equal (float_average 5. 10.) 7.5
+  Float.equal (float_average 5. 10.) 7.50

@@ -32,6 +32,7 @@ type card_value =
 
 let one_card_value : card_value = Queen
 let another_card_value : card_value = Number 8
+let neg_card_value : card_value = Number 13
 
 let card_value_to_string card_value =
   match card_value with
@@ -44,7 +45,12 @@ let card_value_to_string card_value =
 (* Write a function that computes the score of a card (aces should score 11
    and face cards should score 10). *)
 let card_value_to_score card_value =
-  failwith "For you to implement"
+  match card_value with
+  | Ace -> 11
+  | King -> 10
+  | Queen -> 10
+  | Jack -> 10
+  | Number i -> i
 
 (* Remember the list type? We can define a list as a variant type too! *)
 type int_list = 
@@ -77,3 +83,5 @@ let%test "Testing card_value_to_score..." =
 let%test "Testing card_value_to_score..." =
   Int.(=) 5 (card_value_to_score (Number 5))
 
+let%test "Testing card_value_to_score..." =
+  Int.(=) 13 (card_value_to_score (Number 13))
