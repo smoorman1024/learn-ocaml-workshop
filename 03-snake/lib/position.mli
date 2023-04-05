@@ -7,3 +7,5 @@ type t =
   ; row : int
   }
 [@@deriving compare, sexp]
+
+val equal : t -> t -> bool
