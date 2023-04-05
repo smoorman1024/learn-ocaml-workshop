@@ -9,3 +9,4 @@ type t =
 [@@deriving compare, sexp]
 
 val equal : t -> t -> bool
+val to_string : t -> string
