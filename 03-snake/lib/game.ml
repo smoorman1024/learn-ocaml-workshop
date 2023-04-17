@@ -69,7 +69,7 @@ let%test "Testing in_bounds 1..." =
 let create ~height ~width ~initial_snake_length ~amount_to_grow =
   let s = Snake.create ~length:initial_snake_length in
   let head = Snake.head_location s in
-  let oa = Apple.create ~height:height ~width:width ~invalid_locations:[] in
+  let oa = Apple.create ~height:height ~width:width ~invalid_locations:(Snake.locations s) in
   match oa with
   | None -> raise (Failure "unable to create initial apple")
   | Some a ->
@@ -90,11 +90,10 @@ let snake t = t.snake
 let apple t = t.apple
 let game_state t = t.game_state
 
-let set_direction (t : t) direction =
-  let s = Snake.set_direction (snake t) direction in
-  let t_ref = ref t in
-  t_ref := { !t_ref with snake = s };
-  ()
+let set_direction t direction =
+  let snew = Snake.set_direction (snake t) direction in
+  t.snake <- snew
+
 
 (*
    [step] should:
@@ -112,32 +111,19 @@ let step t =
     if not (in_bounds t head) then
       raise (Failure "Wall collision")
     else
-      let t_ref = ref t in
       if Position.equal (Apple.location (apple t)) head
       then
         let s = Snake.grow_over_next_steps s t.amount_to_grow in
         let sa = Apple.create ~height:t.height ~width:t.width ~invalid_locations:(Snake.locations s) in
         match sa with
         | Some a -> 
-          t_ref := 
-            { !t_ref with 
-              snake = s;
-              apple = a; 
-            };
-          ()
+          t.apple <- a;
+          t.snake <- s;
         | None ->
-          t_ref :=
-            { !t_ref with
-              snake = s;
-              game_state = Win;
-            };
-          ()
+          t.snake <- s;
+          t.game_state <- Win;
       else
-        t_ref :=
-          { !t_ref with
-            snake = s;
-          };
-        ()
+        t.snake <- s;
 
 
 
