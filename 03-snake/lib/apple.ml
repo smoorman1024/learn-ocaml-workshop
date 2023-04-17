@@ -20,7 +20,6 @@ let rec create ~height ~width ~invalid_locations =
     let pos : t =
       { location = loc
       } in
-    Stdio.printf "width=%d height=%d locx=%d locy=%d\n" width height locx locy;
     if List.mem invalid_locations loc ~equal:Position.equal
     then
       create ~height:height ~width:width ~invalid_locations:invalid_locations

@@ -19,8 +19,11 @@ let%test "Testing in_bounds 0..." =
   let w = 10 in
   let oa = Apple.create ~height:h ~width:w ~invalid_locations:[] in
   match oa with 
-  | None -> false
+  | None -> 
+    Stdio.printf "Could not print apple\n";
+    false
   | Some a ->
+    Stdio.printf "Created apple\n";
     let g : t =
       { snake = Snake.create ~length:2
       ; apple = a
@@ -75,7 +78,7 @@ let create ~height ~width ~initial_snake_length ~amount_to_grow =
       ; apple = a
       ; height = height
       ; width = width
-      ; amount_to_grow = 0
+      ; amount_to_grow = amount_to_grow
       ; game_state = In_progress
       } in
     if not (in_bounds g head) then
