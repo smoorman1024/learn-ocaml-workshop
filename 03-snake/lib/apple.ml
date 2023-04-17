@@ -4,7 +4,6 @@ type t = { location : Position.t } [@@deriving sexp_of]
 
 let location t = t.location
 
-
 let rec create ~height ~width ~invalid_locations =
   Random.self_init ~allow_in_tests:true ();
   let uniqCount = List.length (List.dedup_and_sort ~compare:Position.compare invalid_locations) in

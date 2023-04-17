@@ -11,3 +11,4 @@ let equal pos0 pos1 =
 
 let to_string pos =
   "(col=" ^ (Int.to_string pos.col) ^ ",row=" ^ (Int.to_string pos.row) ^ ")"
+

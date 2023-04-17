@@ -37,3 +37,5 @@ val set_direction : t -> Direction.t -> t
 (** [step] moves the snake forward by 1. [step] returns [None] if the snake collided
     with itself. *)
 val step : t -> t option
+
+val to_string : t -> string

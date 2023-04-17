@@ -14,6 +14,16 @@ let next_position t (p : Position.t) =
   | Up    -> { p with row = p.row + 1 }
   | Down  -> { p with row = p.row - 1 }
 
+let to_string t =
+  match t with
+  | Left -> "Left"
+  | Right -> "Right"
+  | Up -> "Up"
+  | Down -> "Down"
+
+let equal dir0 dir1 =
+  String.equal (to_string dir0) (to_string dir1)
+
 let%test "Testing Left..." =
   let p0 : Position.t = {row=5; col=5} in
   let np0 : Position.t = next_position Left p0 in
