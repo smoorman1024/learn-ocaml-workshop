@@ -147,3 +147,47 @@ let%test "Testing step 1..." =
   | None -> false
   | Some s1 -> Stdio.printf "s0: %s s1:%s" (to_string s0) (to_string s1);
   [%compare.equal: Position.t list] s1.locations l1
+
+let%test "Testing step 2..." =
+  Stdio.printf "\nTesting step...\n";
+  let l1 : Position.t list = [
+      { col = 2
+      ; row = 0
+      };
+      { col = 1
+      ; row = 0
+      };
+      { col = 0
+      ; row = 0
+      };
+    ] in
+  let s0 = create ~length:2 in
+  let s0 = grow_over_next_steps s0 1 in 
+  let ss1 = step s0 in
+  match ss1 with
+  | None -> false
+  | Some s1 -> Stdio.printf "s0: %s s1:%s" (to_string s0) (to_string s1);
+  [%compare.equal: Position.t list] s1.locations l1 && Int.equal s1.extensions_remaining 0
+
+let%test "Testing step 3..." =
+  Stdio.printf "\nTesting step...\n";
+  let l1 : Position.t list = [
+      { col = 1
+      ; row = 1
+      };
+      { col = 1
+      ; row = 0
+      };
+      { col = 0
+      ; row = 0
+      };
+    ] in
+  let s0 = create ~length:2 in
+  let s0 = grow_over_next_steps s0 1 in 
+  let s0 = set_direction s0 Up in
+  let ss1 = step s0 in
+  match ss1 with
+  | None -> false
+  | Some s1 -> Stdio.printf "s0: %s s1:%s" (to_string s0) (to_string s1);
+  [%compare.equal: Position.t list] s1.locations l1 && Int.equal s1.extensions_remaining 0
+
