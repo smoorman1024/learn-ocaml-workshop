@@ -1,5 +1,7 @@
 open! Base
 
+type tripint = int * int * int
+
 module Colors = struct
   let black = Graphics.rgb 000 000 000
   let green = Graphics.rgb 000 255 000
@@ -9,6 +11,8 @@ module Colors = struct
   let game_lost = Graphics.rgb 200 100 100
   let game_won = Graphics.rgb 100 200 100
   let score_color = Graphics.rgb 255 000 255
+  let snake_color_low : tripint = (000, 010, 000)
+  let snake_color_high : tripint = (000, 255, 000)
 end
 
 module Constants = struct
@@ -75,8 +79,21 @@ let draw_apple apple =
   draw_block apple_location ~color:Colors.apple_color
 ;;
 
+let gradient a b index total =
+  b-(((b-a)*index)/total)
+
+let get_snake_block_color ~index ~total =
+  let r0, g0, b0 = Colors.snake_color_low in
+  let r1, g1, b1 = Colors.snake_color_high in
+  Graphics.rgb (gradient r0 r1 index total) (gradient g0 g1 index total) (gradient b0 b1 index total) 
+
+let draw_snake_block i loc ~total =
+  let color = get_snake_block_color ~index:i ~total:total in
+  draw_block loc ~color:color
+
 let draw_snake snake_locations =
-  List.iter snake_locations ~f:(draw_block ~color:Colors.green);
+  let snakelen = List.length snake_locations in
+  List.iteri snake_locations ~f:(draw_snake_block ~total:snakelen);
   (* Snake head is a different color *)
   draw_block ~color:Colors.head_color (List.hd_exn snake_locations)
 ;;
