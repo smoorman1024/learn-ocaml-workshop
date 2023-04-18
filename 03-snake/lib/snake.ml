@@ -77,9 +77,13 @@ let head_location t =
   | Some loc -> loc
   | _ -> defaultPos 
 
-let set_direction t direction = 
-  let s = {t with direction = direction}
-  in s
+let set_direction t direction =
+  match t.direction, direction with
+  | Direction.Right, Direction.Left -> t
+  | Direction.Left, Direction.Right -> t
+  | Direction.Up, Direction.Down -> t
+  | Direction.Down, Direction.Up -> t
+  | _, _ -> { t with direction = direction }
 
 let%test "Testing set_direction..." =
   Stdio.printf "\nTesting set_direction...\n";
