@@ -25,6 +25,8 @@ let init_exn () =
   if !only_one then failwith "Can only call init_exn once" else only_one := true;
   Graphics.open_graph
     (Printf.sprintf " %dx%d" (play_area_height + header_height) play_area_width);
+  Graphics.set_window_title
+    (Printf.sprintf "Snake");
   let height = play_area_height / block_size in
   let width = play_area_width / block_size in
   Game.create ~height ~width ~initial_snake_length:3 ~amount_to_grow:3

@@ -4,6 +4,7 @@ type t =
   { mutable snake : Snake.t
   ; mutable apple : Apple.t
   ; mutable game_state : Game_state.t
+  ; mutable score : int
   ; height : int
   ; width : int
   ; amount_to_grow : int
@@ -27,6 +28,7 @@ let%test "Testing in_bounds 0..." =
     let g : t =
       { snake = Snake.create ~length:2
       ; apple = a
+      ; score = 0
       ; height = h
       ; width = w
       ; amount_to_grow = 0
@@ -50,6 +52,7 @@ let%test "Testing in_bounds 1..." =
     let g : t =
       { snake = Snake.create ~length:2
       ; apple = a
+      ; score = 0
       ; height = h
       ; width = w
       ; amount_to_grow = 0
@@ -76,6 +79,7 @@ let create ~height ~width ~initial_snake_length ~amount_to_grow =
     let g : t =
       { snake = s 
       ; apple = a
+      ; score = 0
       ; height = height
       ; width = width
       ; amount_to_grow = amount_to_grow
@@ -119,16 +123,13 @@ let step t =
         | Some a -> 
           t.apple <- a;
           t.snake <- s;
+          t.score <- t.score + 1;
         | None ->
           t.snake <- s;
           t.game_state <- Win;
+          t.score <- t.score + 1;
       else
         t.snake <- s;
-
-
-
-
-
 
 module For_testing = struct
   let create_apple_force_location_exn ~height ~width ~location =
