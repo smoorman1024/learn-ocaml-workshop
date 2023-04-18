@@ -19,8 +19,8 @@ let%test "Testing in_bounds 0..." =
   let h = 10 in
   let w = 10 in
   let oa = Apple.create ~height:h ~width:w ~invalid_locations:[] in
-  match oa with 
-  | None -> 
+  match oa with
+  | None ->
     Stdio.printf "Could not print apple\n";
     false
   | Some a ->
@@ -34,7 +34,7 @@ let%test "Testing in_bounds 0..." =
       ; amount_to_grow = 0
       ; game_state = In_progress
       } in
-    let p : Position.t = 
+    let p : Position.t =
       { row = 0
       ; col = 0
       } in
@@ -46,7 +46,7 @@ let%test "Testing in_bounds 1..." =
   let h = 10 in
   let w = 10 in
   let oa = Apple.create ~height:h ~width:w ~invalid_locations:[] in
-  match oa with 
+  match oa with
   | None -> false
   | Some a ->
     let g : t =
@@ -58,7 +58,7 @@ let%test "Testing in_bounds 1..." =
       ; amount_to_grow = 0
       ; game_state = In_progress
       } in
-    let p : Position.t = 
+    let p : Position.t =
       { row = 11
       ; col = 0
       } in
@@ -77,7 +77,7 @@ let create ~height ~width ~initial_snake_length ~amount_to_grow =
   | None -> raise (Failure "unable to create initial apple")
   | Some a ->
     let g : t =
-      { snake = s 
+      { snake = s
       ; apple = a
       ; score = 0
       ; height = height
@@ -111,7 +111,7 @@ let step t =
   let ss = Snake.step (snake t) in
   match ss with
   | None -> raise (Failure "Self collision")
-  | Some s -> 
+  | Some s ->
     let head = Snake.head_location s in
     if not (in_bounds t head) then
       raise (Failure "Wall collision")
@@ -121,7 +121,7 @@ let step t =
         let s = Snake.grow_over_next_steps s t.amount_to_grow in
         let sa = Apple.create ~height:t.height ~width:t.width ~invalid_locations:(Snake.locations s) in
         match sa with
-        | Some a -> 
+        | Some a ->
           t.apple <- a;
           t.snake <- s;
           t.score <- t.score + 1;

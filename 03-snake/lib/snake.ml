@@ -15,8 +15,8 @@ type t =
 
 (* Note that at the beginning of the game, the snake will not need to grow at all, so
    [extensions_remaining] should be initialized to 0. *)
-let create ~length = 
-  let initFunc i = 
+let create ~length =
+  let initFunc i =
     let p : Position.t =
     { col = length-i-1
     ; row = 0
@@ -31,17 +31,17 @@ let create ~length =
   s
 
 let to_string snake =
-  "Snake: direction=" ^ (Direction.to_string snake.direction) 
+  "Snake: direction=" ^ (Direction.to_string snake.direction)
   ^ " extensions_remaining=" ^ (Int.to_string snake.extensions_remaining)
   ^ " locations=" ^ (String.concat ~sep:"," (List.map ~f:Position.to_string snake.locations))
 
-let%test "Testing create..." = 
+let%test "Testing create..." =
   Stdio.printf "\nTesting create...\n";
-  let p0 : Position.t = 
+  let p0 : Position.t =
     { col = 1
     ; row = 0
     } in
-  let p1 : Position.t = 
+  let p1 : Position.t =
     { col = 0
     ; row = 0
     } in
@@ -64,18 +64,18 @@ let%test "Testing grow_over_next_steps..." =
   Stdio.printf "snake0: %s snake1: %s snake2: %s\n" (to_string snake0) (to_string snake1) (to_string snake2);
   Int.equal snake1.extensions_remaining 2 && Int.equal snake2.extensions_remaining 5
 
-let locations t = 
-  t.locations 
+let locations t =
+  t.locations
 
-let head_location t = 
-  let defaultPos : Position.t = 
+let head_location t =
+  let defaultPos : Position.t =
     { col = 1
     ; row = 0
     } in
   let hl = List.hd t.locations in
   match hl with
   | Some loc -> loc
-  | _ -> defaultPos 
+  | _ -> defaultPos
 
 let set_direction t direction =
   match t.direction, direction with
@@ -97,7 +97,7 @@ let%test "Testing set_direction..." =
    [step] should:
    - move the snake forward one block, growing it and updating [t.locations] if necessary
    - check for self collisions *)
-let step t = 
+let step t =
   let head = head_location t in
   let nextHead = Direction.next_position t.direction head in
   let snakelen = List.length (locations t) in
@@ -131,7 +131,7 @@ let%test "Testing step 0..." =
   | None -> false
   | Some s1 -> Stdio.printf "s0: %s s1:%s" (to_string s0) (to_string s1);
   [%compare.equal: Position.t list] s1.locations l1
-   
+  
 let%test "Testing step 1..." =
   Stdio.printf "\nTesting step...\n";
   let l1 : Position.t list = [
@@ -166,7 +166,7 @@ let%test "Testing step 2..." =
       };
     ] in
   let s0 = create ~length:2 in
-  let s0 = grow_over_next_steps s0 1 in 
+  let s0 = grow_over_next_steps s0 1 in
   let ss1 = step s0 in
   match ss1 with
   | None -> false
@@ -187,7 +187,7 @@ let%test "Testing step 3..." =
       };
     ] in
   let s0 = create ~length:2 in
-  let s0 = grow_over_next_steps s0 1 in 
+  let s0 = grow_over_next_steps s0 1 in
   let s0 = set_direction s0 Up in
   let ss1 = step s0 in
   match ss1 with
