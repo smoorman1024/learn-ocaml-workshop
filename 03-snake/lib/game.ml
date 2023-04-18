@@ -93,6 +93,7 @@ let create ~height ~width ~initial_snake_length ~amount_to_grow =
 let snake t = t.snake
 let apple t = t.apple
 let game_state t = t.game_state
+let score t = t.score
 
 let set_direction t direction =
   let snew = Snake.set_direction (snake t) direction in

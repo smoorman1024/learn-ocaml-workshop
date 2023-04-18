@@ -8,7 +8,7 @@ type t =
 
 let to_string t =
   match t with
-  | In_progress -> ""
+  | In_progress -> "In progress"
   | Game_over x -> "Game over: " ^ x
   | Win -> "WIN!"
 ;;

@@ -26,6 +26,9 @@ val apple : t -> Apple.t
 (** [game_state] returns the state of the current game. *)
 val game_state : t -> Game_state.t
 
+(** [score] returns the score of the current game. *)
+val score : t -> int
+
 (** [step] is called in a loop, and the game is re-rendered after each call. *)
 val step : t -> unit
 
