@@ -8,7 +8,7 @@ module Colors = struct
   let game_in_progress = Graphics.rgb 100 100 200
   let game_lost = Graphics.rgb 200 100 100
   let game_won = Graphics.rgb 100 200 100
-  let score_color = Graphics.rgb 000 000 255
+  let score_color = Graphics.rgb 255 000 255
 end
 
 module Constants = struct
@@ -28,6 +28,7 @@ let init_exn () =
     (Printf.sprintf " %dx%d" (play_area_height + header_height) play_area_width);
   Graphics.set_window_title
     (Printf.sprintf "Snake");
+  Graphics.set_font "*Bold*";
   let height = play_area_height / block_size in
   let width = play_area_width / block_size in
   Game.create ~height ~width ~initial_snake_length:3 ~amount_to_grow:3
@@ -53,12 +54,12 @@ let draw_header ~game_state ~score =
   Graphics.fill_rect 0 play_area_height play_area_width header_height;
   let header_text = Game_state.to_string game_state in
   Graphics.set_color Colors.score_color;
-  Graphics.set_text_size 20;
+  Graphics.set_text_size 40;
   Graphics.moveto 0 (play_area_height + 25);
   Graphics.draw_string (Printf.sprintf " %d" score);
 
   Graphics.set_color Colors.black;
-  Graphics.set_text_size 20;
+  Graphics.set_text_size 40;
   Graphics.moveto 25 (play_area_height + 25);
   Graphics.draw_string (Printf.sprintf " %s" header_text)
 ;;
