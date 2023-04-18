@@ -11,8 +11,8 @@ module Colors = struct
   let game_lost = Graphics.rgb 200 100 100
   let game_won = Graphics.rgb 100 200 100
   let score_color = Graphics.rgb 255 000 255
-  let snake_color_low : tripint = (000, 010, 000)
-  let snake_color_high : tripint = (000, 255, 000)
+  let snake_color_low : tripint = (000, 100, 000)
+  let snake_color_high : tripint = (100, 255, 100)
 end
 
 module Constants = struct
